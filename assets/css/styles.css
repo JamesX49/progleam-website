@@ -385,3 +385,16 @@ p { margin: 0 0 1rem; }
 .note-line { font-size: .92rem; color: var(--text-mut); border-left: 3px solid var(--mist); padding: 6px 0 6px 16px; margin: 22px 0; background: var(--mist-soft); border-radius: 0 6px 6px 0; }
 .lede { font-size: 1.12rem; color: #38474e; }
 .center-cta { text-align: center; margin-top: 38px; }
+
+
+/* ===== Placeholder images + social ===== */
+.oc-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.detail-banner { display: block; width: 100%; height: auto; border-radius: var(--radius); margin-bottom: 26px; box-shadow: var(--shadow-sm); }
+.social-links { display: inline-flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.social-links a { display: inline-flex; align-items: center; gap: 6px; }
+.social-links .icon { width: 18px; height: 18px; color: var(--slate); }
+.footer-social { display: flex; gap: 12px; margin-top: 8px; }
+.footer-social a { display: inline-flex; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.16); border-radius: 8px; align-items: center; justify-content: center; }
+.footer-social .icon { width: 18px; height: 18px; color: #97a8ae; }
+.footer-social a:hover { border-color: var(--mist); text-decoration: none; }
+.footer-social a:hover .icon { color: var(--mist); }
