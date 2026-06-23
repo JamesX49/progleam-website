@@ -59,14 +59,46 @@
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
 
-  /* ---- Quote forms (Phase 1 demo — wire to email/Formspree in Phase 2) ---- */
+  /* ---- Quote forms (submitted via Web3Forms) ---- */
   document.querySelectorAll("form[data-quote-form]").forEach(function (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (form.dataset.sending === "1") { return; } /* prevent double submission */
+      /* Require at least one contact method on forms that have both phone and email */
+      var phoneEl = form.querySelector('[name="phone"]');
+      var emailEl = form.querySelector('[name="email"]');
+      if (emailEl) { emailEl.setCustomValidity(""); }
+      if (phoneEl && emailEl && !phoneEl.value.trim() && !emailEl.value.trim()) {
+        emailEl.setCustomValidity("Please add a phone number or email so we can reply.");
+      }
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var ok = form.querySelector(".form-success");
-      if (ok) { ok.style.display = "block"; ok.scrollIntoView({ behavior: "smooth", block: "center" }); }
-      form.reset();
+      var btn = form.querySelector('[type="submit"]');
+      var payload = JSON.stringify(Object.fromEntries(new FormData(form)));
+      if (btn) { btn.disabled = true; }
+      form.dataset.sending = "1";
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: payload
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        if (res && res.success) {
+          if (ok) {
+            ok.style.display = "block";
+            ok.scrollIntoView({ behavior: "smooth", block: "center" });
+            if (typeof ok.focus === "function") { ok.focus(); } /* announce to screen readers */
+          }
+          form.reset();
+        } else {
+          alert("Sorry, your message could not be sent. Please call us on 07863 017292.");
+        }
+        if (btn) { btn.disabled = false; }
+        form.dataset.sending = "";
+      }).catch(function () {
+        alert("Sorry, your message could not be sent. Please call us on 07863 017292.");
+        if (btn) { btn.disabled = false; }
+        form.dataset.sending = "";
+      });
     });
   });
 
