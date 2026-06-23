@@ -1,87 +1,63 @@
-# ProGleam — Phase 1 Launch Site (multi-page)
+# ProGleam — Exterior Cleaning Website
 
-A fast, professional, conversion-focused **multi-page** website for **ProGleam**,
-exterior cleaning specialists based in Kilmarnock, covering Ayrshire, Glasgow and
-surrounding areas. Built for SEO, conversion and future scalability — the
-homepage stays the main sales page, but every key topic now has its own real,
-crawlable page.
+Static multi-page website for **ProGleam Ltd**, exterior cleaning specialists based in
+Kilmarnock, covering Ayrshire, Glasgow and surrounding areas. Built for local SEO and
+conversion: the homepage is the main sales page, and every key service and area has its
+own crawlable page.
 
-Keeps the latest visual direction (brand palette, Montserrat/Barlow type,
-roofline logo, line icons, drag-to-compare before/after sliders).
+## Source of truth
+This folder is the single working copy:
 
----
+```
+C:\Users\jimmy\OneDrive\Documents\New project\progleam-website
+```
 
-## Page structure (clean folder-per-page URLs)
+All edits and deployments are made from here. An older Claude-generated
+`outputs\progleam-site` copy is deprecated and should not be used.
 
-| URL | File |
-|-----|------|
-| `/` | `index.html` |
-| `/services/` | `services/index.html` |
-| `/services/window-cleaning/` | `services/window-cleaning/index.html` |
-| `/services/roof-cleaning/` | `services/roof-cleaning/index.html` |
-| `/services/gutter-cleaning/` | `services/gutter-cleaning/index.html` |
-| `/services/driveway-cleaning/` | `services/driveway-cleaning/index.html` |
-| `/services/patio-cleaning/` | `services/patio-cleaning/index.html` |
-| `/services/pressure-washing/` | `services/pressure-washing/index.html` |
-| `/areas/` | `areas/index.html` |
-| `/areas/kilmarnock/` · `/areas/ayrshire/` · `/areas/glasgow/` | `areas/<area>/index.html` |
-| `/gallery/` | `gallery/index.html` |
-| `/quote/` | `quote/index.html` |
-| `/contact/` | `contact/index.html` |
-| `/privacy-policy/` · `/cookie-policy/` | `<slug>/index.html` |
+## Current state (ready for launch pending photos/content)
+- **34 pages:** homepage; services index + 12 service pages; areas index + 12 area pages;
+  gallery; quote; contact; 404; and Privacy, Cookie and Terms.
+- **Forms — connected to Web3Forms** (access key in place). Each form posts to
+  `api.web3forms.com`, requires a name, a service and **at least one of phone or email**,
+  shows an accessible success message (`role="status"`, focus-announced), prevents double
+  submission, and carries a hidden `source` field identifying which form was used.
+- **Contact:** mobile 07863 017292, landline 01563 657121, email info@progleam.co.uk.
+  Privacy requests go to privacy@progleam.co.uk; legal pages also reference
+  support@progleam.co.uk.
+- **Company:** ProGleam Ltd, registered in Scotland, company number SC866567, registered
+  office 1 Simonsburn Road, Kilmarnock, KA1 5LA.
+- **Reviews:** real Google reviews on the homepage, with a combined Google/Facebook
+  strapline.
+- **Legal:** Privacy, Cookie and Terms pages are drafted and marked `noindex`.
+- **SEO:** unique title, meta description and H1 per page; `HomeAndConstructionBusiness`,
+  per-service `Service`, per-area LocalBusiness, `BreadcrumbList` and `FAQPage` schema;
+  Open Graph + Twitter card; a real social share image; `robots.txt`; and a cleaned
+  `sitemap.xml` that **excludes the noindex legal pages**.
 
-Shared assets live in `/assets/` (`css/styles.css`, `js/main.js`, `images/`).
-Pages link with **relative paths**, so the site works both when opened from the
-folder and when hosted at a domain root.
-
-## Navigation
-Services → `/services/` · Gallery → `/gallery/` · Areas → `/areas/` ·
-Reviews → homepage `#reviews` · FAQs → homepage `#faqs` · Contact → `/contact/` ·
-**Free quote** button → `/quote/`. Each main service card has **View service**
-and **Get a quote** buttons.
-
----
+## Structure
+Clean folder-per-page URLs (`/services/roof-cleaning/`, `/areas/kilmarnock/`, etc.).
+Shared assets live in `/assets/` (`css/styles.css`, `js/main.js`, `images/`). Pages use
+relative paths, so the site works both opened locally and hosted at a domain root.
 
 ## Positioning note — roof repairs
-Per your brief, ProGleam is positioned as an **exterior cleaning** company, not a
-roof-repair company. "Roof repairs" has been removed from the hero, navigation,
-service cards and all SEO copy. It remains only inside the **logo artwork**
-(your brand lockup: "Exterior Cleaning & Roof Repairs") and as a small note on
-the roof-cleaning page that minor repairs can be arranged on request. If you'd
-prefer it gone from the logo too, say the word and I'll adjust the logo subtitle.
+ProGleam is positioned as an **exterior cleaning** company. The logo lockup still reads
+"Exterior Cleaning & Roof Repairs", which reflects the business's history and is
+intentional. Confirm at launch whether to keep the roof-repairs wording in the logo.
 
----
+## Deployment
+Source is pushed to GitHub repo `JamesX49/progleam-website` (branch `main`), which
+auto-deploys to DigitalOcean App Platform. Do **not** publish until the items below are
+addressed and you give the go-ahead. See `DEPLOYMENT-CHECKLIST.md`.
 
-## ⚠️ Before launch — replace placeholders
-Search the folder for `[` to find them:
+## Remaining before / at launch
+- **Real photos** — driveway, patio, gutter, area banners and the gallery still use
+  "Replace with your photo" placeholders. Roof cleaning already uses real before/after photos.
+- **Verify trust/operational claims** — see `CLAIMS-TO-VERIFY.md`.
+- **Live deployment checks** — see `DEPLOYMENT-CHECKLIST.md`.
+- **Host-level security headers** (DigitalOcean) — see `DEPLOYMENT-CHECKLIST.md`.
+- **Confirm** the three email inboxes (info@, privacy@, support@) are monitored, and that
+  the Facebook/Instagram handles in the footer are correct.
 
-| Placeholder | Replace with |
-|---|---|
-| `[EMAIL]` | Real email (and the `mailto:` links) |
-| `[POSTCODE]` | Business postcode (homepage structured data) |
-| `[DATE]` | Date legal pages were last updated |
-| `[ADD LINKS]` | Facebook / Instagram URLs |
-
-Also: drop real photos in `assets/images/` and replace the labelled "Replace
-with your photo" placeholders (hero, every before/after slider, service & area
-thumbnails, gallery, maps); swap the sample reviews for real ones; have the legal
-pages reviewed; and connect the quote forms (they carry `data-quote-form` and
-currently just show a success message — point each `action` at Formspree /
-Web3Forms / Netlify Forms, or your CRM).
-
-## Local SEO already in place
-Unique title + meta description per page, `HomeAndConstructionBusiness`,
-per-service `Service` schema, per-area LocalBusiness schema, `BreadcrumbList`
-on inner pages, `FAQPage` on the homepage, Open Graph, `robots.txt` and a
-full `sitemap.xml` covering all 17 URLs.
-**Next:** Google Business Profile for Kilmarnock, register the domain, add a real
-`og-image.jpg` (1200×630).
-
----
-
-## Regenerating
-The whole site is generated by `../build_site.py`. Edit content/data there and
-re-run `python3 build_site.py` to rebuild consistently. Earlier drafts are kept
-in `../version-1/` and `../version-2/` for reference.
-
-*Phase 1 launch structure — proper multi-page foundation, ready to grow.*
+## Tech
+Plain static HTML/CSS/JS, no build step or framework. Edit the page files directly.
