@@ -64,13 +64,6 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (form.dataset.sending === "1") { return; } /* prevent double submission */
-      /* Require at least one contact method on forms that have both phone and email */
-      var phoneEl = form.querySelector('[name="phone"]');
-      var emailEl = form.querySelector('[name="email"]');
-      if (emailEl) { emailEl.setCustomValidity(""); }
-      if (phoneEl && emailEl && !phoneEl.value.trim() && !emailEl.value.trim()) {
-        emailEl.setCustomValidity("Please add a phone number or email so we can reply.");
-      }
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var ok = form.querySelector(".form-success");
       var btn = form.querySelector('[type="submit"]');
