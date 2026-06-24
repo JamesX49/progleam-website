@@ -4,6 +4,49 @@
 (function () {
   "use strict";
 
+  /* ---- Cookie consent (Google Consent Mode v2) ---- */
+  (function () {
+    var KEY = "pg-consent";
+    var choice = null;
+    try { choice = localStorage.getItem(KEY); } catch (e) {}
+    function grant() {
+      if (window.gtag) {
+        gtag("consent", "update", {
+          ad_storage: "granted", ad_user_data: "granted",
+          ad_personalization: "granted", analytics_storage: "granted"
+        });
+      }
+    }
+    if (choice === "granted") { grant(); return; }
+    if (choice === "denied") { return; }
+    function showBar() {
+      if (!document.body) { return; }
+      var bar = document.createElement("div");
+      bar.className = "cookie-bar";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie consent");
+      bar.innerHTML =
+        '<p class="cookie-text">We use cookies to measure site traffic and improve your experience. ' +
+        'See our <a href="/cookie-policy/">Cookie Policy</a>.</p>' +
+        '<div class="cookie-actions">' +
+        '<button type="button" class="btn btn--ghost btn--sm" data-cc="decline">Decline</button>' +
+        '<button type="button" class="btn btn--primary btn--sm" data-cc="accept">Accept</button>' +
+        '</div>';
+      bar.addEventListener("click", function (e) {
+        var t = e.target && e.target.closest ? e.target.closest("[data-cc]") : null;
+        if (!t) { return; }
+        var v = t.getAttribute("data-cc") === "accept" ? "granted" : "denied";
+        try { localStorage.setItem(KEY, v); } catch (e2) {}
+        if (v === "granted") { grant(); }
+        if (bar.parentNode) { bar.parentNode.removeChild(bar); }
+      });
+      document.body.appendChild(bar);
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", showBar);
+    } else { showBar(); }
+  })();
+
   /* ---- Mobile nav ---- */
   var nav = document.querySelector(".nav");
   var toggle = document.querySelector(".nav-toggle");
@@ -76,6 +119,11 @@
         body: payload
       }).then(function (r) { return r.json(); }).then(function (res) {
         if (res && res.success) {
+          if (window.gtag) {
+            gtag("event", "generate_lead", {
+              form_source: ((form.querySelector("[name=source]") || {}).value) || "website"
+            });
+          }
           if (ok) {
             ok.style.display = "block";
             ok.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -93,6 +141,18 @@
         form.dataset.sending = "";
       });
     });
+  });
+
+  /* ---- Lead interaction events (WhatsApp / phone clicks) ---- */
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest ? e.target.closest("a") : null;
+    if (!a || !window.gtag) { return; }
+    var href = a.getAttribute("href") || "";
+    if (/wa\.me|api\.whatsapp\.com|whatsapp:/i.test(href)) {
+      gtag("event", "contact", { method: "whatsapp" });
+    } else if (/^tel:/i.test(href)) {
+      gtag("event", "contact", { method: "phone" });
+    }
   });
 
   /* ---- Footer year ---- */
