@@ -1,0 +1,15 @@
+# Normalise line endings so CRLF/LF differences stop showing as changes.
+# Text files are stored and checked out with LF.
+* text=auto eol=lf
+
+# Binary assets: never normalise (protect their bytes).
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.pdf   binary
