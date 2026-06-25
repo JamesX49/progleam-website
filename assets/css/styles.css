@@ -389,6 +389,12 @@ p { margin: 0 0 1rem; }
 .svc-mini-list a { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 9px 15px; font-family: var(--f-head); font-weight: 600; font-size: .9rem; color: var(--navy); }
 .svc-mini-list a:hover { border-color: var(--mist); text-decoration: none; }
 .svc-mini-list .icon { width: 18px; height: 18px; color: var(--green-dk); }
+/* Area-page services: clean one-column, full-width, large tap targets on mobile */
+@media (max-width: 600px) {
+  .svc-mini-list { flex-direction: column; gap: 8px; }
+  .svc-mini-list li { display: block; width: 100%; }
+  .svc-mini-list a { width: 100%; justify-content: flex-start; padding: 13px 16px; font-size: .95rem; }
+}
 
 .note-line { font-size: .92rem; color: var(--text-mut); border-left: 3px solid var(--mist); padding: 6px 0 6px 16px; margin: 22px 0; background: var(--mist-soft); border-radius: 0 6px 6px 0; }
 .lede { font-size: 1.12rem; color: #38474e; }
