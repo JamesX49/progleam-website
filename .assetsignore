@@ -1,0 +1,10 @@
+# Files NOT to publish to the live Cloudflare Pages site.
+# Keeps internal docs, scripts and repo plumbing out of the public deploy.
+# Adjust per project if your structure differs.
+.git
+.github
+node_modules
+*.md
+*.py
+.assetsignore
+.gitignore
