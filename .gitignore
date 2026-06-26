@@ -1,0 +1,3 @@
+.cloudflare-deploy/
+.wrangler/
+node_modules/
