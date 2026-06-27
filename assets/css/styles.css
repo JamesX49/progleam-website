@@ -283,6 +283,9 @@ p { margin: 0 0 1rem; }
 .ci-item b { font-family: var(--f-head); color: var(--navy); display: block; }
 .ci-item a, .ci-item span { color: var(--text-mut); }
 .quote-form { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow-md); border-top: 4px solid var(--green); }
+.contact-info, .quote-form { min-width: 0; }
+.ci-item { min-width: 0; }
+.ci-item > div { min-width: 0; overflow-wrap: break-word; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-success { display: none; background: #e8f7ee; border: 1px solid #b6e6c7; color: #176b3f; padding: 16px; border-radius: var(--radius-sm); margin-bottom: 18px; }
 
