@@ -159,7 +159,7 @@ p { margin: 0 0 1rem; }
 
 /* Hero quote card — solid & grounded (not glassy) */
 .quote-card { background: #fff; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-md); border-top: 4px solid var(--green); }
-.quote-card h3 { font-size: 1.3rem; margin-bottom: 4px; }
+.quote-card h2 { font-size: 1.3rem; margin-bottom: 4px; color: var(--navy); }
 .quote-card .qc-sub { color: var(--text-mut); font-size: .94rem; margin-bottom: 18px; }
 .field { margin-bottom: 14px; }
 .field label { display: block; font-family: var(--f-head); font-size: .8rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
@@ -291,7 +291,7 @@ p { margin: 0 0 1rem; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.1fr; gap: 34px; margin-bottom: 42px; }
 .footer-brand .logo { margin-bottom: 16px; }
 .footer-brand p { font-size: .92rem; max-width: 300px; }
-.site-footer h4 { font-family: var(--f-head); color: #fff; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; }
+.site-footer h2 { font-family: var(--f-head); color: #fff; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; }
 .site-footer li { margin-bottom: 9px; }
 .site-footer a { color: #97a8ae; font-size: .92rem; }
