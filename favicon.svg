@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ProGleam">
+  <rect width="32" height="32" rx="6" fill="#23303c"/>
+  <path d="M6 19l10-7 10 7" stroke="#bbdadb" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="16" cy="12" r="2" fill="#7bd494"/>
+</svg>
