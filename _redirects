@@ -1,0 +1,22 @@
+# Cloudflare Pages redirects.
+#
+# WHY THIS FILE EXISTS
+# Cloudflare Pages serves every page at BOTH /path/ and /path/index.html, and both
+# return 200. Google crawled 17 duplicate /index.html URLs on this site, wasted the
+# crawl budget of a brand-new domain, and surfaced /services/gutter-cleaning/index.html
+# in search results instead of the clean URL. These rules 301 the duplicates away.
+#
+# NOTES
+# - Placeholders (:name) match a single path segment and never cross a "/".
+#   Site depth is 0, 1 and 2 segments, so the three rules below cover every page.
+#   Do NOT swap these for a splat (*): a splat matches greedily across slashes and
+#   only one is allowed per rule.
+# - Order matters: the top-most matching rule wins. Static before dynamic.
+# - Redirects are always followed even when the asset exists, which is the point here.
+# - Verify after any change:
+#     curl -sI https://www.progleam.co.uk/services/gutter-cleaning/index.html
+#   must return 301 to /services/gutter-cleaning/
+
+/index.html               /            301
+/:a/index.html            /:a/         301
+/:a/:b/index.html         /:a/:b/      301

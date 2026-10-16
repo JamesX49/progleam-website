@@ -111,6 +111,12 @@
       var ok = form.querySelector(".form-success");
       var btn = form.querySelector('[type="submit"]');
       var payload = JSON.stringify(Object.fromEntries(new FormData(form)));
+      /* Snapshot the fields for the ProGleam business app BEFORE the form is
+         reset. Strip the Web3Forms-only fields: access_key (never leak our key)
+         and botcheck (the spam honeypot). */
+      var appLead = new FormData(form);
+      appLead.delete("access_key");
+      appLead.delete("botcheck");
       if (btn) { btn.disabled = true; }
       form.dataset.sending = "1";
       fetch("https://api.web3forms.com/submit", {
@@ -124,6 +130,16 @@
               form_source: ((form.querySelector("[name=source]") || {}).value) || "website"
             });
           }
+          /* Also log this lead in the ProGleam business app (fire-and-forget).
+             Runs ONLY after Web3Forms confirmed success, so the app never gets
+             bot/honeypot hits, invalid submissions or duplicate double-clicks.
+             Never blocks the user and never affects the email, which has already
+             sent by this point. keepalive lets it finish if the user navigates. */
+          try {
+            fetch("https://progleam-app.pages.dev/api/web-lead", {
+              method: "POST", body: appLead, keepalive: true
+            }).catch(function () {});
+          } catch (e) {}
           if (ok) {
             ok.style.display = "block";
             ok.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -143,7 +159,12 @@
     });
   });
 
-  /* ---- Lead interaction events (WhatsApp / phone clicks) ---- */
+  /* ---- Lead interaction events (WhatsApp / phone / email clicks) ----
+     Note: GA4 enhanced measurement's outbound "click" event does NOT fire for
+     tel: or mailto: links (they are protocol schemes, not outbound domains),
+     so these must be tracked by hand. The "method" parameter is registered as
+     an event-scoped Custom Dimension in GA4 - if you add a new method value or
+     a new parameter here, register it there too or GA4 discards it. ---- */
   document.addEventListener("click", function (e) {
     var a = e.target && e.target.closest ? e.target.closest("a") : null;
     if (!a || !window.gtag) { return; }
@@ -152,6 +173,8 @@
       gtag("event", "contact", { method: "whatsapp" });
     } else if (/^tel:/i.test(href)) {
       gtag("event", "contact", { method: "phone" });
+    } else if (/^mailto:/i.test(href)) {
+      gtag("event", "contact", { method: "email" });
     }
   });
 
